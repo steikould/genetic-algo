@@ -1,0 +1,41 @@
+{
+  "optimization_mode": "hybrid",
+  "ga_swell_volume": 3916.587111148049,
+  "ga_ebitda": -813861.1471582903,
+  "blend_plan": {
+    "N001": {
+      "location": "Refinery_A",
+      "allocation_ratio": 0.9999999999994393,
+      "transmix_volume": 50000,
+      "blend_volume": 49999.999999971966,
+      "can_reinject": true,
+      "transport_cost": 10.0,
+      "estimated_swell": 10119.999999994256,
+      "estimated_profit": -814579.9999995435
+    },
+    "N002": {
+      "location": "Terminal_B",
+      "allocation_ratio": 0.0,
+      "transmix_volume": 30000,
+      "blend_volume": 0.0,
+      "can_reinject": false,
+      "transport_cost": 20.0,
+      "estimated_swell": 0.0,
+      "estimated_profit": 0.0
+    },
+    "N003": {
+      "location": "Terminal_C",
+      "allocation_ratio": 5.6071813858687e-13,
+      "transmix_volume": 25000,
+      "blend_volume": 1.401795346467175e-08,
+      "can_reinject": false,
+      "transport_cost": 30.0,
+      "estimated_swell": 5.607181385868736e-09,
+      "estimated_profit": -4.569852829482989e-07
+    }
+  },
+  "refined_swell_volume": 10119.999999994256,
+  "refined_ebitda": -814580.0000000468,
+  "improvement_swell": 158.38822711715025,
+  "improvement_ebitda": 0
+}

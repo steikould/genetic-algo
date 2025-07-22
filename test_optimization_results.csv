@@ -1,0 +1,4 @@
+,location,allocation_ratio,transmix_volume,blend_volume,can_reinject,transport_cost,estimated_swell,estimated_profit
+N001,Refinery_A,0.9999999999994393,50000,49999.999999971966,True,10.0,10119.999999994256,-814579.9999995435
+N002,Terminal_B,0.0,30000,0.0,False,20.0,0.0,0.0
+N003,Terminal_C,5.6071813858687e-13,25000,1.401795346467175e-08,False,30.0,5.607181385868736e-09,-4.569852829482989e-07
