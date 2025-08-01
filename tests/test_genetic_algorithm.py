@@ -35,7 +35,9 @@ class TestGeneticAlgorithm(unittest.TestCase):
         self.assertAlmostEqual(np.sum(mutated_individual), 1.0)
 
     def test_run_genetic_algorithm(self):
-        best_qm, max_ebitda = run_genetic_algorithm(self.inputs)
+        results = run_genetic_algorithm(self.inputs)
+        best_qm = results["best_qm"]
+        max_ebitda = results["final_fitness"]
         self.assertAlmostEqual(np.sum(best_qm), 1.0)
         self.assertGreater(max_ebitda, 0)
 
