@@ -10,23 +10,34 @@ toolbox = base.Toolbox()
 
 
 # Create smart initialization function
-def smart_seed(pop_size, S_transmix, S_target, n_locations, epsilon=1e-6):
+# [MXMC] n renamed to pop_size
+def smart_seed(pop_size, center, S_transmix, S_target, n_locations, epsilon=1e-6, noise=0.02):
     """
     Create smart initialization function
     """
+    ####################################################################################################
+    # Option 1: detailed, fine-grained weighting based on every single data point's difference
+    delta_weights = 1 / np.clip(np.abs(np.array(S_transmix[:n_locations]) - S_target), 1e-6, None)
+    delta_weights /= np.sum(delta_weights)
+    # Option 2: while the second provides a coarser, summary weighting based on the average behaviors of 
+    # rows versus an overall average.
     # Calculate inverse-delta weights: higher weight = closer to target
-    delta_weights = 1.0 / (np.abs(S_target.mean(axis=1) - S_transmix.mean()) + epsilon)
+    # delta_weights = 1.0 / (np.abs(S_target.mean(axis=1) - S_transmix.mean()) + epsilon)
+    ####################################################################################################
 
     # Generate population using Dirichlet distribution
     init_qms = []
-    for _ in range(pop_size):
+    population=[center]
+    for _ in range(pop_size - 1):
         alpha = delta_weights * 20  # Concentration parameter
         sample = np.random.dirichlet(alpha)
-        init_qms.append(sample)
+        sample = np.clip(sample + np.random.normal(0, noise, n_locations), 0, 1)
+        sample /= np.sum(sample)
+        population.append(sample.to_list())
 
-    return init_qms
+    return population
 
-
+# [MXMC] - FAN OUT INPUTS INTO ACTUAL PARAMETERS
 def evaluate_ebitda(individual, transmix_props, target_specs, diesel_price, transport_cost_matrix, storage_cost_per_unit):
     """
     individual: split ratio allocation across locations [0.3, 0.4, 0.3]
@@ -60,16 +71,26 @@ def mutate_and_normalize(individual, mu=0, sigma=0.1, indpb=0.2):
     individual[:] = individual / np.sum(individual)  # Normalize
     return individual,
 
-
+# inputs and batch are the same
 def run_genetic_algorithm(inputs, pop_size=200, ngen=100, cxpb=0.6, mutpb=0.2, sigma_value=0.1):
     n_locations = inputs.n_locations
 
     # Smart seeding
-    init_qms = smart_seed(pop_size, inputs.S_transmix, inputs.S_target, n_locations)
-
+    #TODO update center
+    center = [1,1]
+    init_qms = smart_seed(pop_size, center, inputs.S_transmix, inputs.S_target, n_locations)
+    # TODO - [MXMC] - I'm here.
     # Create initial population
     pop = [creator.Individual(qm) for qm in init_qms]
 
+
+    toolbox = base.Toolbox()
+    toolbox.register("attr_float", lambda: random.uniform(0, 1))
+    toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attr_float, n=n_locations)
+    toolbox.register("evaluate", evaluate_individual, inputs=inputs, const=const)
+    toolbox.register("mate", tools.cxBlend, alpha=0.5)
+    toolbox.register("select", tools.selTournament, tournsize=2)
+    
     # Register evaluation function
     toolbox.register("evaluate", evaluate_ebitda,
                      transmix_props=inputs.S_transmix,
