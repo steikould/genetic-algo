@@ -1,0 +1,6 @@
+numpy
+scipy
+deap
+pydantic
+matplotlib
+seaborn
