@@ -1,4 +1,0 @@
-,location,blend_ratio,transmix_volume,blend_volume,can_reinject
-N001,Refinery_A,1.0,50000,50000.0,True
-N002,Terminal_B,1.0,30000,30000.0,False
-N003,Terminal_C,0.8000000000000003,25000,20000.000000000007,False

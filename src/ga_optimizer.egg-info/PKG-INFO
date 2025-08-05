@@ -1,3 +1,25 @@
+Metadata-Version: 2.4
+Name: ga_optimizer
+Version: 0.0.1
+Summary: A genetic algorithm for fuel blending optimization.
+Author-email: Example Author <author@example.com>
+Project-URL: Homepage, https://github.com/example/ga-optimizer
+Project-URL: Bug Tracker, https://github.com/example/ga-optimizer/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy
+Requires-Dist: scipy
+Requires-Dist: deap
+Requires-Dist: pydantic
+Requires-Dist: matplotlib
+Requires-Dist: seaborn
+Dynamic: license-file
+Dynamic: requires-dist
+
 # GA Optimizer
 
 A flexible and extensible genetic algorithm for fuel blending optimization.
